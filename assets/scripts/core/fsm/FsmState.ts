@@ -16,6 +16,6 @@ export default class FsmState
 
     public changeStage(type:string)
     {
-
+        this.fsm.changeState(type);
     }
 }

@@ -1,4 +1,6 @@
 import Global from "./core/Global";
+import FsmState from "./core/fsm/FsmState";
+import Fsm from "./core/fsm/Fsm";
 
 // Learn TypeScript:
 //  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/typescript.html
@@ -20,3 +22,4 @@ export default class Driver extends cc.Component
         Global.setup();
     }
 }
+
