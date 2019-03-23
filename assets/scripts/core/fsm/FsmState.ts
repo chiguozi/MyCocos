@@ -18,4 +18,9 @@ export default class FsmState
     {
         this.fsm.changeState(type);
     }
+
+    //暂时不做事件注册   如果监听的事件多了 再考虑添加
+    public onEvent(eventType, argList)
+    {
+    }
 }

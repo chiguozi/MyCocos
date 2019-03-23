@@ -1,4 +1,4 @@
-class EventHandler
+export default class EventHandler
 {
     private static _pool:any[] = [];
     private static _gid = 0;

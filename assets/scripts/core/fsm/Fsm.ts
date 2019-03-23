@@ -5,6 +5,7 @@ export default class Fsm
     public name:string;
     public stateMap = {}
     public currentState:FsmState;
+    public isDestroyed = false;
 
     public get isRunning()
     {
@@ -23,6 +24,7 @@ export default class Fsm
         }
         this.stateMap[key] = state;
         state.onInit(this);
+        this.isDestroyed = false;
     }
 
     public removeState(key)
@@ -80,10 +82,34 @@ export default class Fsm
     }
 
 
-    public update()
+    public onUpdate()
     {
         if(this.currentState == null)
             return;
         this.currentState.onUpdate();
+    }
+
+    //发送状态机事件  只有当前状态机响应
+    public fireEvent(type, ...args)
+    {
+        if(this.currentState != null)
+        {
+            this.currentState.onEvent(type, args);
+        }
+    }
+
+    public shutDown()
+    {
+        if(this.currentState != null)
+        {
+            this.currentState.onLeave();
+            this.currentState = null;
+        }
+        for(let key in this.stateMap)
+        {
+            this.stateMap[key].onDestory()
+        }
+        this.stateMap = {};
+        this.isDestroyed = true;
     }
 }

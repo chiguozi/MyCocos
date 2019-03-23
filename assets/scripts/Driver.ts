@@ -1,6 +1,4 @@
 import Global from "./core/Global";
-import FsmState from "./core/fsm/FsmState";
-import Fsm from "./core/fsm/Fsm";
 
 // Learn TypeScript:
 //  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/typescript.html
@@ -12,7 +10,7 @@ import Fsm from "./core/fsm/Fsm";
 //  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
 
-const {ccclass, property} = cc._decorator;
+const {ccclass} = cc._decorator;
 
 @ccclass
 export default class Driver extends cc.Component 
@@ -20,6 +18,18 @@ export default class Driver extends cc.Component
     start () 
     {
         Global.setup();
+    }
+
+
+    update()
+    {
+        Global.onUpdate();
+    }
+
+
+    lateUpdate()
+    {
+        Global.onLateUpdate();
     }
 }
 

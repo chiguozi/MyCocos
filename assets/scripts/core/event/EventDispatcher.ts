@@ -1,3 +1,4 @@
+import EventHandler from "./EventHandler";
 export default class EventDispatcher  {
     private eventMap = {}
 
@@ -8,12 +9,12 @@ export default class EventDispatcher  {
         return listener != null;
     }
 
-    public on(type:string, caller, method:Function, args)
+    public on(type:string, caller, method:Function, args?)
     {
         return this._createListener(type, caller, method, args, false);
     }
 
-    public once(type:string, caller, method:Function, args)
+    public once(type:string, caller, method:Function, args?)
     {
         return this._createListener(type, caller, method, args, true);
     }
@@ -93,13 +94,50 @@ export default class EventDispatcher  {
     }
 
 
-    private recoverHandlers(arr:*):void {
-        if (!arr) return;
-        if (arr.run) {
-            arr.recover();
+        /**
+     * 派发事件。
+     * @param type	事件类型。
+     * @param data	（可选）回调数据。<b>注意：</b>如果是需要传递多个参数 p1,p2,p3,...可以使用数组结构如：[p1,p2,p3,...] ；如果需要回调单个参数 p ，且 p 是一个数组，则需要使用结构如：[p]，其他的单个参数 p ，可以直接传入参数 p。
+     * @return 此事件类型是否有侦听者，如果有侦听者则值为 true，否则值为 false。
+     */
+    public event(type:string, data:* = null) 
+    {
+        if (!this.eventMap || !this.eventMap[type]) return false;
+        
+        let listeners:* = this.eventMap[type];
+        if (listeners.run) {
+            if (listeners.once) delete this.eventMap[type];
+            data != null ? listeners.runWith(data) : listeners.run();
         } else {
-            for (let i = arr.length - 1; i > -1; i--) {
-                if (arr[i]) {
+            for (let i = 0, n = listeners.length; i < n; i++) {
+                let listener:EventHandler = listeners[i];
+                if (listener) {
+                    (data != null) ? listener.runWith(data) : listener.run();
+                }
+                if (!listener || listener.once) {
+                    listeners.splice(i, 1);
+                    i--;
+                    n--;
+                }
+            }
+            if (listeners.length === 0 && this.eventMap) delete this.eventMap[type];
+        }
+        
+        return true;
+	}
+
+    private recoverHandlers(arr:*):void 
+    {
+        if (!arr) return;
+        if (arr.run) 
+        {
+            arr.recover();
+        } else 
+        {
+            for (let i = arr.length - 1; i > -1; i--) 
+            {
+                if (arr[i]) 
+                {
                     arr[i].recover();
                     arr[i] = null;
                 }
