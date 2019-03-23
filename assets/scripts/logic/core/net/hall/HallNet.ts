@@ -1,12 +1,14 @@
-import EventDispatcher from "../../event/EventDispatcher";
+import Global from "../../Global";
+import EventDispatcher from "../../../../framework/event/EventDispatcher";
 //大厅网络管理器
 export default class HallNet extends EventDispatcher
 {
     private USEWS = false;
 
-    public sendGlobal()
+    public sendGlobal(func:string, param:any, )
     {
-        
+        let url = Global.Setting.urls.globalUrl;
+
     }
 
 

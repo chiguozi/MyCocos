@@ -1,4 +1,4 @@
-import Global from "../Global";
+import Global from "../../logic/core/Global";
 
 export default class Storage
 {

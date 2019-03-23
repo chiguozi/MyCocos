@@ -1,4 +1,4 @@
-import Global from "./core/Global";
+import Global from "./logic/core/Global";
 
 // Learn TypeScript:
 //  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/typescript.html
