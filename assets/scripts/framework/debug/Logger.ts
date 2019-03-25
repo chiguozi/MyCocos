@@ -10,10 +10,10 @@ export enum LogLevel
 
 export class Logger 
 {
-    public logLevel:LogLevel = LogLevel.All;
-    public logEnable = true;
+    public static logLevel:LogLevel = LogLevel.All;
+    public static logEnable = true;
 
-    public logObj(obj, ...args)
+    public static logObj(obj, ...args)
     {
         let logger = console.log || cc.log;
         if(this.logEnable && this.logLevel & LogLevel.Log)
@@ -22,7 +22,7 @@ export class Logger
         }
     }
 
-    public log(...args)
+    public static log(...args)
     {
         let logger = console.log || cc.log;
         if(this.logEnable && this.logLevel & LogLevel.Log)
@@ -31,7 +31,7 @@ export class Logger
         }
     }
 
-    public warn(...args)
+    public static warn(...args)
     {
         let logger = console.warn || cc.warn;
         if(this.logEnable && this.logLevel & LogLevel.Warn)
@@ -40,7 +40,7 @@ export class Logger
         }
     }
 
-    public error(...args)
+    public static error(...args)
     {
         let logger = console.error || cc.error;
         if(this.logEnable && this.logLevel & LogLevel.Error)
@@ -49,13 +49,13 @@ export class Logger
         }
     }
 
-    private getLogContent(args)
+    private static getLogContent(args)
     {
         let content =  this.getDateStr()  + args.join("\t"); 
         return content;
     }
 
-    private getDateStr()
+    private static  getDateStr()
     {
         var d = new Date();
         var str = d.getHours().toString();

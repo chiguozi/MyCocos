@@ -1,4 +1,4 @@
-import Global from "../../logic/core/Global";
+import { Logger } from "../debug/Logger";
 
 export default class Storage
 {
@@ -35,7 +35,7 @@ export default class Storage
         }
         catch(e)
         {
-            Global.Logger.error("Storage.setObject 出错", e && e.message)
+            Logger.error("Storage.setObject 出错", e && e.message)
             return;
         }
     }
@@ -68,7 +68,7 @@ export default class Storage
         }
         catch(e)
         {
-            Global.Logger.error("Storage.getObject 出错", e && e.message)
+           Logger.error("Storage.getObject 出错", e && e.message)
         }
         return obj;
     }

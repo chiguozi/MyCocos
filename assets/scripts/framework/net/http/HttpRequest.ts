@@ -1,5 +1,6 @@
 import EventDispatcher from "../../event/EventDispatcher";
-import Global from "../../Global";
+import Global from "../../../logic/core/Global";
+import { Logger } from "../../debug/Logger";
 
 export default class HttpRequest extends EventDispatcher
 {
@@ -63,7 +64,7 @@ export default class HttpRequest extends EventDispatcher
 
     private httpEvent(type, event)
     {
-        Global.Logger.error(type, event);
+        Logger.error(type, event);
     }
 
     private onReadyStateChange()
@@ -83,7 +84,7 @@ export default class HttpRequest extends EventDispatcher
 
     private onError(content)
     {
-        Global.Logger.error(content, this._url);
+        Logger.error(content, this._url);
         this.event(HttpRequest.EVENT_ERROR, this._url);
     }
 

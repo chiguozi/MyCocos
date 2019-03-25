@@ -1,14 +1,13 @@
-import EventDispatcher from "./event/EventDispatcher";
-import { Logger, LogLevel } from "./debug/Logger";
-import FsmManager from "./fsm/FsmManager";
-import HttpProxy from "./net/http/HttpProxy";
-import ToolKit from "./tool/Toolkit";
-import Setting from "./setting/Setting";
+import EventDispatcher from "../../framework/event/EventDispatcher";
+import { Logger, LogLevel } from "../../framework/debug/Logger";
+import FsmManager from "../../framework/fsm/FsmManager";
+import HttpProxy from "../../framework/net/http/HttpProxy";
+import ToolKit from "../../framework/tool/Toolkit";
+import Setting from "../../framework/setting/Setting";
 
 export default  class Global 
 {
     public static Event:EventDispatcher;
-    public static Logger:Logger;
     public static FsmManager:FsmManager;
     
     public static Http:HttpProxy;
@@ -23,9 +22,8 @@ export default  class Global
         //三方库的使用 + 常用工具函数
         this.ToolKit = new ToolKit();
 
-        this.Logger = new Logger;
-        this.Logger.logLevel = LogLevel.All;
-        this.Logger.logEnable = true;
+        Logger.logLevel = LogLevel.All;
+        Logger.logEnable = true;
 
         //fsm管理器
         this.FsmManager = new FsmManager();
