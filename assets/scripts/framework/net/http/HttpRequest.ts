@@ -1,5 +1,4 @@
 import EventDispatcher from "../../event/EventDispatcher";
-import Global from "../../../logic/core/Global";
 import { Logger } from "../../debug/Logger";
 
 export default class HttpRequest extends EventDispatcher

@@ -26,7 +26,7 @@ export default class Urls
 
     public initLoginInfo(hallUrl, uid, token)
     {
-        this.hallHttpUrl = hallUrl + "{0}?_func={1}&uid=" + uid + "&token=" + token;
+        this.hallHttpUrl = hallUrl + "%s?_func=%s&uid=" + uid + "&token=" + token;
     }
 
     public getGlobalUrl()

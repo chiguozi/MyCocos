@@ -3,16 +3,13 @@ import HttpRequest from "./HttpRequest";
  export default class HttpProxy
  {
      static HttpTimeout = 3000;
-     public errorHandler : Function;
-     public send(url:string, param:any, onComplete:Function)
+     public send(url:string, param:any, onComplete:Function, onError:Function)
      {
         let req = new HttpRequest();
         req.on(HttpRequest.EVENT_COMPLETE, null, onComplete)
-        req.on(HttpRequest.EVENT_ERROR, null, this.errorHandler);
+        req.on(HttpRequest.EVENT_ERROR, null, onError);
         req.setTimeout(HttpProxy.HttpTimeout);
-        let msg = null;
-        if(param)
-            msg = JSON.stringify(param);
+        let msg = this.getSendContent(param);
         req.send(url, msg, "post");
      }
 
@@ -23,9 +20,17 @@ import HttpRequest from "./HttpRequest";
         if(onError)
             req.on(HttpRequest.EVENT_ERROR, null, onError);
         req.setTimeout(HttpProxy.HttpTimeout);
-        let msg = null;
-        if(param)
-            msg = JSON.stringify(param);
+        let msg = this.getSendContent(param);
         req.send(url, msg, "get");
+     }
+
+     private getSendContent(param)
+     {
+        if(param == null || param == "")
+            return null;
+        if(typeof(param) == "string")
+            return param;
+        return JSON.stringify(param)
+
      }
  }
