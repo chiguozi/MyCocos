@@ -3,10 +3,12 @@ import { MD5 } from "../../lib/cryptoTs/algo/MD5";
 import { Hasher } from "../../lib/cryptoTs/lib/Hasher";
 export default class ToolKit
 {
-    private cryptoKey = "yaoxing8901234561234567890123488"
-    private cryptoIv: string = "yaoxing890123488";
+    private cryptoKey = "12"
+    private cryptoIv: string = "123";
 
     private MD5Hasher;
+
+    private uuid:number = 0;
 
 
     public decodeMsg(msg)
@@ -41,5 +43,12 @@ export default class ToolKit
             this.MD5Hasher = Hasher._createHelper(MD5);
         }
         return this.MD5Hasher(content)
+    }
+
+    //获取客户端运行时唯一id
+    public getClientUuid()
+    {
+        this.uuid++;
+        return this.uuid;
     }
 }
