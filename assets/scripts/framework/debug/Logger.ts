@@ -3,7 +3,7 @@ export enum LogLevel
     None = 0,
     Log = 0x01,
     Warn = 0x02,
-    Info = 0x04,
+    Net = 0x04,
     Error = 0x08,
     All = 0xff,
 }
@@ -35,6 +35,15 @@ export class Logger
     {
         let logger = console.warn || cc.warn;
         if(this.logEnable && this.logLevel & LogLevel.Warn)
+        {
+            logger.call(this, this.getLogContent(args));
+        }
+    }
+
+    public static net(...args)
+    {
+        let logger = console.log || cc.log;
+        if(this.logEnable && this.logLevel & LogLevel.Net)
         {
             logger.call(this, this.getLogContent(args));
         }

@@ -10,6 +10,7 @@ import HttpRequest from "./HttpRequest";
         req.on(HttpRequest.EVENT_ERROR, null, onError);
         req.setTimeout(HttpProxy.HttpTimeout);
         let msg = this.getSendContent(param);
+        Logger.log("Send HallMSG:", msg)
         req.send(url, msg, "post");
      }
 

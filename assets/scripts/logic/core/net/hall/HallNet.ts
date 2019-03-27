@@ -1,33 +1,65 @@
 import EventDispatcher from "../../../../framework/event/EventDispatcher";
 import { NetJccommon } from "./NetEvent";
-import { HallErrorHandler } from "./HallErrorHandler";
+import { HallErrorHandler, HttpNetExtraData as NetExtraData } from "./HallErrorHandler";
 //大厅网络管理器
 export default class HallNet extends EventDispatcher
 {
     private USEWS = false;
+    //通用协议错误处理 （业务逻辑错误）
     private defaultErrorHandler:HallErrorHandler = new HallErrorHandler;
 
-    public sendGlobal(func:string, param:any, onComplete?:Function, errorHandler?:Function)
+    public sendGlobal(func:string, param:any, onComplete?:Function, errorHandler?:Function, extraData?:NetExtraData)
     {
         let url = Global.Setting.urls.globalUrl;
-        let serverData = this.getMsgParam(NetJccommon.mod, func, param);
-        Global.Http.send(url, serverData, (msg)=>
-        {
-            this.onMessage(msg, onComplete, errorHandler, url);
-        }, null);
+        let serverData = this.getMsgParam(NetJccommon.mod, func, param, true);
+        this.sendInternal(url, serverData, onComplete, errorHandler, extraData);
     }
 
     //大厅内http协议请求
     //errorHandler  模块定制错误处理  返回true 则继续执行， false丢弃
-    public send(mod:string, key:string, param:any, onComplete?:Function, errorHandler?:Function)
+    public send(mod:string, key:string, param:any, onComplete?:Function, errorHandler?:Function,extraData?:NetExtraData)
     {
         let serverData = this.getMsgParam(mod, key, param);
         let url = cc.js.formatStr(Global.Setting.urls.hallHttpUrl, mod, key);
-        Global.Http.send(url, serverData, (msg)=>{
-            this.onMessage(msg, onComplete, errorHandler, url);
-        }, null);
+        this.sendInternal(url, serverData, onComplete, errorHandler, extraData);
     }
 
+
+
+    private sendInternal(url, serverData, onComplete, errorHandler, extraData?:NetExtraData)
+    {
+        Global.Http.send(url, serverData, (msg)=>
+        {
+            this.onMessage(msg, onComplete, errorHandler, url);
+        }, ()=>
+        {
+            if(extraData == null)
+            {
+                extraData = new NetExtraData();
+                extraData.param = serverData;
+                extraData.onComplete = onComplete;
+                extraData.errorHandler = errorHandler;
+                extraData.url = url;
+            }
+            this.onMessegeError(extraData);
+        });
+    }
+
+
+    private onMessegeError(extraData:NetExtraData)
+    {
+        extraData.retryTimes++;
+        //小于重连次数 则重新发送
+        if(extraData.retryTimes < extraData.retryTotalTime)
+        {
+            this.sendInternal(extraData.url, extraData.param, extraData.onComplete, extraData.errorHandler, extraData);
+            return;
+        }
+        else
+        {
+            //@todo  通用错误处理  弹窗或者上报
+        }
+    }
 
 
     private onMessage(msg, onComplete:Function, errorHandler:Function, url:string)
@@ -73,16 +105,16 @@ export default class HallNet extends EventDispatcher
 
 
 
-
+    //自定义errorHandler 可以处理完定制的  再执行通用的
     public tryHandleError(serverData)
     {
         return this.defaultErrorHandler.tryHandleError(serverData);
     }
 
-    private getMsgParam(mod:string, func:string, param:any)
+    private getMsgParam(mod:string, func:string, param:any, useMode = false)
     {
         let msg:any = {}
-        if(this.USEWS)
+        if(useMode)
         {
             msg._mod = mod
             msg._func = func;

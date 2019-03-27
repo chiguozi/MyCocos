@@ -1,16 +1,20 @@
 import EventDispatcher from "./framework/event/EventDispatcher";
 import FsmManager from "./framework/fsm/FsmManager";
 import HttpProxy from "./framework/net/http/HttpProxy";
-import ToolKit from "./framework/tool/Toolkit";
+import Toolkit from "./framework/tool/Toolkit";
 import Setting from "./framework/setting/Setting";
+import HallNet from "./logic/core/net/hall/HallNet";
+import ResourceManager from "./framework/resource/ResourceManager";
 
 declare global {
     declare class Global {
         static Event:EventDispatcher;
         static FsmManager:FsmManager;
         static Http:HttpProxy;
-        static Toolkit:ToolKit;
+        static HallNet:HallNet;
+        static Toolkit:Toolkit;
         static Setting:Setting;
+        static ResourceManager:ResourceManager;
     
         static setup();
     
@@ -26,7 +30,7 @@ declare global {
         None = 0,
         Log = 0x01,
         Warn = 0x02,
-        Info = 0x04,
+        Net = 0x04,
         Error = 0x08,
         All = 0xff,
     }
