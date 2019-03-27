@@ -2,10 +2,11 @@ import EventDispatcher from "../../framework/event/EventDispatcher";
 import { Logger, LogLevel } from "../../framework/debug/Logger";
 import FsmManager from "../../framework/fsm/FsmManager";
 import HttpProxy from "../../framework/net/http/HttpProxy";
-import Toolkit from "../../framework/tool/Toolkit";
-import Setting from "../../framework/setting/Setting";
 import HallNet from "./net/hall/HallNet";
 import ResourceManager from "../../framework/resource/ResourceManager";
+import Setting from "./setting/Setting";
+import Toolkit from "./tool/Toolkit";
+import AudioManager from "../../framework/audio/AudioManager";
 
 export default  class Global 
 {
@@ -20,6 +21,8 @@ export default  class Global
     public static Setting:Setting;
 
     public static ResourceManager:ResourceManager;
+
+    public static Audio:AudioManager;
 
 
     public static setup()
@@ -41,8 +44,12 @@ export default  class Global
 
         //各类游戏配置  +  本地存储
         this.Setting = new Setting();
+        this.Setting.setup();
         //资源管理器  资源加载  释放   依赖管理
         this.ResourceManager = new ResourceManager();
+
+        this.Audio = new AudioManager();
+        this.Audio.setup(this.Setting.settingData, this.ResourceManager);
 
     }
 

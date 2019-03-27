@@ -2,18 +2,6 @@ import { Logger } from "../debug/Logger";
 
 export default class Storage
 {
-    //暂时所有key 在Storage中定义  后续考虑分文件
-    //Game中的key不要这定义
-    public static TokenKey = "token";
-    public static UidKey = "token";
-    //渠道号
-    public static ChannelKey = "channel";
-    //手机号码
-    public static PhoneKey = "phone";
-    //md5后的手机密码
-    public static Md5PwdKey = "pwd";
-
-
     //默认为string格式存储  包括数字
     public set(key:string, value:any)
     {
@@ -46,6 +34,11 @@ export default class Storage
         this.set(key, content);
     }
 
+    public hasKey(key)
+    {
+        return this.get(key) != ""
+    }
+
 
     public get(key)
     {
@@ -54,6 +47,18 @@ export default class Storage
         if(value == null)
             value = ""
         return value;
+    }
+
+    public getNumber(key, defalut = 0)
+    {
+        let content = this.get(key);
+        if(content == "")
+            return defalut;
+        let value = Number(content);
+        if(!isNaN(value))
+            return value
+        else    
+            return defalut;
     }
 
     public getObject(key):any

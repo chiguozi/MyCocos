@@ -1,6 +1,6 @@
-import * as Crypto from "../../lib/cryptoTs/crypto-ts"
-import { MD5 } from "../../lib/cryptoTs/algo/MD5";
-import { Hasher } from "../../lib/cryptoTs/lib/Hasher";
+import * as Crypto from "../../../lib/cryptoTs/crypto-ts"
+import { MD5 } from "../../../lib/cryptoTs/algo/MD5";
+import { Hasher } from "../../../lib/cryptoTs/lib/Hasher";
 export default class Toolkit
 {
     private cryptoKey = "1"

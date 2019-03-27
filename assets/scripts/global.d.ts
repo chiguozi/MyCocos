@@ -2,9 +2,10 @@ import EventDispatcher from "./framework/event/EventDispatcher";
 import FsmManager from "./framework/fsm/FsmManager";
 import HttpProxy from "./framework/net/http/HttpProxy";
 import Toolkit from "./framework/tool/Toolkit";
-import Setting from "./framework/setting/Setting";
+import Setting from "./logic/core/setting/Setting";
 import HallNet from "./logic/core/net/hall/HallNet";
 import ResourceManager from "./framework/resource/ResourceManager";
+import AudioManager from "./framework/audio/AudioManager";
 
 declare global {
     declare class Global {
@@ -15,6 +16,7 @@ declare global {
         static Toolkit:Toolkit;
         static Setting:Setting;
         static ResourceManager:ResourceManager;
+        static Audio:AudioManager;
     
         static setup();
     
