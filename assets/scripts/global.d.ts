@@ -6,6 +6,7 @@ import Setting from "./logic/core/setting/Setting";
 import HallNet from "./logic/core/net/hall/HallNet";
 import ResourceManager from "./framework/resource/ResourceManager";
 import AudioManager from "./framework/audio/AudioManager";
+import UIManager from "./logic/core/ui/UIManager";
 
 declare global {
     declare class Global {
@@ -17,6 +18,7 @@ declare global {
         static Setting:Setting;
         static ResourceManager:ResourceManager;
         static Audio:AudioManager;
+        static UI:UIManager;
     
         static setup();
     

@@ -15,15 +15,23 @@ export default class WndBase extends ViewBase
     public layer:string;
     //动画类型
     public animType:string;
-    
+
+    public name:string;
+
     constructor()
     {
         super();
         this.onInit();
+        this.registToUIManager();
     }
 
     protected onInit()
     {}
+
+    protected registToUIManager()
+    {
+        Global.UI.registUI(this);
+    }
 
 
 

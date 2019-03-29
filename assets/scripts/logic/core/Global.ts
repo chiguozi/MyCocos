@@ -7,6 +7,7 @@ import ResourceManager from "../../framework/resource/ResourceManager";
 import Setting from "./setting/Setting";
 import Toolkit from "./tool/Toolkit";
 import AudioManager from "../../framework/audio/AudioManager";
+import UIManager from "./ui/UIManager";
 
 export default  class Global 
 {
@@ -24,6 +25,7 @@ export default  class Global
 
     public static Audio:AudioManager;
 
+    public static UI:UIManager;
 
     public static setup()
     {
@@ -50,6 +52,9 @@ export default  class Global
 
         this.Audio = new AudioManager();
         this.Audio.setup(this.Setting.settingData, this.ResourceManager);
+
+
+        this.UI = new UIManager();
 
     }
 

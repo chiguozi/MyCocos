@@ -1,3 +1,5 @@
+import WndBase from "./WndBase";
+
 export default class UIManager
 {
     //防止子游戏import不了，使用变量的形式，如果有需要就改成enum
@@ -11,6 +13,9 @@ export default class UIManager
     private uiRoot:cc.Node;
     //layerName => layerNode
     private layerMap = {};
+
+    //string => wndbase
+    private windowMap = {}
 
 
     public createUIRoot()
@@ -46,6 +51,15 @@ export default class UIManager
     }
 
 
+    public registUI(wndbase:WndBase)
+    {
+        if(this.windowMap[wndbase.name] != null)
+        {
+            Logger.error("重复注册UI", wndbase.name);
+            return;
+        }
+        this.windowMap[wndbase.name] = wndbase;
+    }
 
     
 
