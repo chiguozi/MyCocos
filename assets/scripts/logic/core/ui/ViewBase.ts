@@ -19,16 +19,15 @@ export default class ViewBase
     protected initView()
     {}
     //面板打开回调
-    protected onOpen(args?:[])
+    public onOpen(args?:any[])
     {}
     //界面关闭时回调
-    protected onClose()
+    public onClose()
     {}
 
     //界面销毁
-    protected onDispose()
+    public onDispose()
     {}
-
 
     public getComponent<T extends cc.Component>(path:string, type:string):T
     {

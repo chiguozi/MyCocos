@@ -55,6 +55,7 @@ export default  class Global
 
 
         this.UI = new UIManager();
+        this.UI.setup(this.ResourceManager);
 
     }
 
